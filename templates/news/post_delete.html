@@ -1,0 +1,39 @@
+{% extends 'news/base1.html' %}
+
+{% load custom_filters %}
+
+{% block title %}
+Posts
+{% endblock title %}
+ 
+<!-- Перед таблицей добавим форму для поиска -->
+{% block content %}
+    <h2>Вы действительно хотите удалить данную новость?</h2>
+    <table>
+        <thread>
+            <th>
+               Заголовок
+            </th>
+            <th>
+                Дата публикации
+            </th>
+            <th>
+                Текст
+            </th>
+        </thread>
+        <tr>
+            <td>
+                {{ post.headline|Censor }}
+            </td>
+            <td>
+                {{ post.datetime|date:'d-M-Y'}} 
+            </td>
+            <td>
+                {{ post.main_part|Censor|truncatechars:50}}
+            </td>
+        </tr>
+    </table>
+    <form method="POST">
+        {% csrf_token %}
+        <input type="submit" value="подтвердить"></form>
+{% endblock content %} 

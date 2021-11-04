@@ -1,0 +1,17 @@
+{% extends 'news/base1.html' %}
+
+{% block title %}
+Posts
+{% endblock title %}
+
+{%block content %}
+<h3>Информация о новости</h3>
+<form method="POST">
+    {% csrf_token %}
+    {{form}}
+    <input type="submit" value="Добавить новость">
+</form>
+{% if is_not_authors %}
+    <button> <a href="/sign/upgrade"> Хочу стать Authors!</a> </button>
+    {% endif %}
+{%endblock content %}

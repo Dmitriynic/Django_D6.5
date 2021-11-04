@@ -1,0 +1,49 @@
+{% extends 'news/base.html' %}
+
+{% load custom_filters %}
+ 
+{% block title %}
+Posts
+{% endblock title %}
+ 
+<!-- Перед таблицей добавим форму для поиска -->
+{% block content %}
+    <form method="GET">
+        {{ filter.form }} <!-- Форму от фильтров за нас сделает django. А вот кнопку, увы придётся делать самому -->
+        <input type="submit" value="Найти">
+    </form>
+    <h1>Все посты</h1>
+    <h3> Количество постов: {{posts|length}} </h3>
+    <hr>
+    {% if posts %} <!-- Если есть товары, то выводим таблицу с ними -->
+        <table>
+            <tr>
+                <td>
+                    Заголовок
+                </td>
+                <td>
+                    Дата публикации
+                </td>
+                <td>
+                    Текст
+                </td>
+            </tr>
+        {% for post in filter.qs %}
+            <tr>
+                <td>
+                    {{ post.headline|Censor }}
+                </td>
+                <td>
+                    {{ post.datetime|date:'d-M-Y'}} 
+                </td>
+                <td>
+                    {{ post.main_part|Censor|truncatechars:50}}
+                </td>
+            </tr>
+        {% endfor %}
+        </table>
+    {% else %}
+        <h2>Постов нет!</h2>
+    {% endif %}
+
+{% endblock content %}
